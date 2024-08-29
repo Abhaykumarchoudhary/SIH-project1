@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function popdistricts() {
+            var statedropdown = document.getElementById("state");
+            var districtdropdown = document.getElementById("district");
+
+            districtdropdown.innerHTML = "";
+            var selectedstate = statedropdown.value;
+
+            var districts = {
+                "1": ["Select...", "Nicobar", "North and Middle Andaman", "South Andaman"],
+                "2": ["Select...", "Alluri Sitharama Raju", "Anakapalli", "Ananthapuramu", "Annamayya", "Bapatla", "Chittoor", "Dr. B.R. Ambedkar Konaseema", "East Godavari", "Eluru", "Guntur", "Kakinada", "Krishna", "Kurnool", "Nandyal", "Ntr", "Palnadu", "Parvathipuram Manyam", "Prakasam", "Sri Potti Sriramulu Nellore", "Sri Sathya Sai", "Srikakulam", "Tirupati", "Visakhapatnam", "Vizianagaram", "West Godavari", "Y.S.R."],
+                "3": ["Select...", "Anjaw", "Changlang", "Dibang Valley", "East Kameng", "East Siang", "Kamle", "Kra Daadi", "Kurung Kumey", "Leparada", "Lohit", "Longding", "Lower Dibang Valley", "Lower Siang", "Lower Subansiri", "Namsai", "Pakke Kessang", "Papum Pare", "Shi Yomi", "Siang", "Tawang", "Tirap", "Upper Siang", "Upper Subansiri", "West Kameng", "West Siang"],
+                "4": ["Select...", "Bajali", "Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup", "Kamrup Metro", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Marigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara Mancachar", "Tamulpur", "Tinsukia", "Udalguri", "West Karbi Anglong"],
+                "5": ["Select...", "Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur (Bhabua)", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Pashchim Champaran", "Patna", "Purbi Champaran", "Purnia", "Rohtas", "Saharsa", "SamastipurSaran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali"],
+                "6": ["Select...", "Chandigarh"],
+                "7": ["Select...", "Balod", "Balodabazar-Bhatapara", "Balrampur-Ramanujganj", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dakshin Bastar Dantewada", "Dhamtari", "Durg", "Gariyaband", "Gaurela-Pendra-Marwahi", "Janjgir-Champa", "Jashpur", "Kabeerdham", "Khairagarh-Chhuikhadan-Gandai", "Kondagaon", "Korba", "Korea", "Mahasamund", "Manendragarh-Chirmiri-Bharatpur(M C B)", "Mohla-Manpur-Ambagarh Chouki", "Mungeli", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Sakti", "Sarangarh-Bilaigarh", "Sukma", "Surajpur", "Surguja", "Uttar Bastar Kanker"],
+                "8": ["Select...", "Dadra And Nagar Haveli", "Daman", "Diu"],
+                "9": ["Select...", "Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"],
+                "10": ["Select...", "North Goa", "South Goa"],
+                "11": ["Select...", "Ahmedabad", "Amreli", "Anand", "Arvalli", "Banas Kantha", "Bharuch", "Bhavnagar", "Botad", "Chhotaudepur", "Dahod", "Dangs", "Devbhumi Dwarka", "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh", "Kachchh", "Kheda", "Mahesana", "Mahisagar", "Morbi", "Narmada", "Navsari", "Panch Mahals", "Patan", "Porbandar", "Rajkot", "Sabar Kantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"],
+                "12": ["Select...", "Ambala", "Bhiwani", "Charki Dadri", "Faridabad", "Fatehabad", "Gurugram", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"],
+                "13": ["Select...", "Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul And Spiti", "Mandi", "Shimla", "Sirmaur", "Solan", "Una"],
+                "14": ["Select...", "Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal", "Jammu", "Kathua", "Kishtwar", "Kulgam", "Kupwara", "Poonch", "Pulwama", "Rajouri", "Ramban", "Reasi", "Samba", "Shopian", "Srinagar", "Udhampur"],
+                "15": ["Select...", "Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahebganj", "Saraikela Kharsawan", "Simdega", "West Singhbhum"],
+                "16": ["Select...", "Bagalkote", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar", "Chamarajanagara", "Chikkaballapura", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davangere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayanagar", "Vijayapura", "Yadgir"],
+                "17": ["Select...", "Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"],
+                "18": ["Select...", "Kargil", "Leh Ladakh"],
+                "19": ["Select...", "Lakshadweep District"],
+                "20": ["Select...", "Agar-Malwa", "Alirajpur", "Anuppu", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa (East Nimar)", "Khargone (West Nimar)", "MAUGANJ", "Maihar", "Mandla", "Mandsaur", "Morena", "Narmadapuram", "Narsimhapur", "Neemuch", "Niwari", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Pandhurna", "Panna", "Raisen", "Rajgarh", "Ratlam", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"],
+                "21": ["Select...", "Ahmednagar", "Akola", "Amravati", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Chhatrapati Sambhajinagar", "Dharashiv", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Palghar", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"],
+                "22": ["Select...", "Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapat", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"],
+                "23": ["Select...", "East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "Eastern West Khasi Hills", "North Garo Hills", "Ri Bhoi", "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"],
+                "24": ["Select...", "Aizawl", "Champhai", "Hnahthial", "Khawzawl", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saitual", "Serchhip", "Siaha",],
+                "25": ["Select...", "Chumoukedima", "Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon", "Niuland", "Noklak", "Peren", "Phek", "Shamator", "Tseminyu", "Tuensang", "Wokha", "Zunheboto"],
+                "26": ["Select...", "Anugul", "Balangir", "Baleshwar", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Deogarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghapur", "Jajapur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Sonepur", "Sundargarh"],
+                "27": ["Select...", "Karaikal", "Mahe", "Puducherry", "Yanam"],
+                "28": ["Select...", "Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Ferozepur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana", "Malerkotla", "Mansa", "Moga", "Pathankot", "Patiala", "Rupnagar", "S.A.S Nagar", "Sangrur", "Shahid Bhagat Singh Nagar", "Sri Muktsar Sahi", "Tarn Taran"],
+                "29": ["Select...", "Ajmer", "Alwar", "Anupgarh", "Balotra", "Banswara", "Baran", "Barmer", "Beawar", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Deeg", "Dholpur", "Didwana-Kuchaman", "Dudu", "Dungarpur", "Ganganagar", "Gangapurcity", "Hanumangarh", "Jaipur", "Jaipur (Gramin)", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Jodhpur (Gramin)", "Karauli", "Kekri", "Khairthal-Tijara", "Kota", "Kotputli-Behror", "Nagaur", "Neem Ka Thana", "Pali", "Phalodi", "Pratapgarh", "Rajsamand", "Salumbar", "Sanchore", "Sawai Madhopur", "Shahpura", "Sikar", "Sirohi", "Tonk", "Udaipur"],
+                "30": ["Select...", "Gangtok", "Gyalshing", "Mangan", "Namchi", "Pakyong", "Soreng"],
+                "31": ["Select...", "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kancheepuram", "Kanniyakumari", "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "The Nilgiris", "Theni", "Thiruvallur", "Thiruvarur", "Thoothukkudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvannamalai", "Vellore", "Viluppuram", "Virudhunagar"],
+                "32": ["Select...", "Adilabad", "Bhadradri Kothagudem", "Hanumakonda", "Hyderabad", "Jagitial", "Jangoan", "Jayashankar Bhupalapally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam", "Kumuram Bheem Asifabad", "Mahabubabad", "Mahabubnagar", "Mancherial", "Medak", "Medchal Malkajgiri", "Mulugu", "Nagarkurnool", "Nalgonda", "Narayanpet", "Nirma", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Ranga Reddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Waranga", "Yadadri Bhuvanagiri"],
+                "33": ["Select...", "Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"],
+                "34": ["Select...", "Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudra Prayag", "Tehri Garhwal", "Udam Singh Nagar", "Uttar Kashi"],
+                "35": ["Select...", "Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Ayodhya", "Azamgarh", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Bara Banki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur", "Farrukhabad", "Fatehpur", "Firozabad", "Gautam Buddha Nagar", "Ghaziabad", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kanpur Nagar", "Kasganj", "Kaushambi", "Kheri", "Kushinagar", "Lalitpur", "Lucknow", "Mahoba", "Mahrajganj", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Prayagraj", "Rae Bareli", "Rampur", "Saharanpur", "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shrawasti", "Siddharthnagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"],
+                "36": ["Select...", "Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Darjeeling", "Hooghly", "Howrah", "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"]
+            };
+
+            var districtoptions = districts[selectedstate];
+            for (var i = 0; i < districtoptions.length; i++) {
+                var option = document.createElement("option");
+                option.text = districtoptions[i];
+                districtdropdown.add(option);
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="output.css">
+</head>
+
+<body class="bg-[url('oo.webp')] bg-cover flex">
+    <div class="fixed h-full w-1/3">
+        <div class="py-3 pb-8 text-2xl font-bold bg-orange-200 z-10">IndianHeritage.in</div>
+        <div class="flex items-center">
+            <i class="text-3xl fa-solid fa-bars"></i>
+            <h1 class="text-2xl font-semibold pl-3">Menu</h1>
+        </div>
+    </div>
+    <div class="fixed flex justify-center items-center h-[76px] w-full ml-[375px] mr-8 pl-2 font-semibold text-lg bg-orange-200 z-10">
+        <a href="main.html" class="px-5 border-r-2 border-black">Home</a>
+        <details class="px-5 border-r-2 border-black bg-transparent w-48 open:w-60 open:pt-24"
+            onchange="window.location.href=this.value;">
+            <summary>Govt. Websites</summary>
+            <p>*<a href="https://www.irctctourism.com/">IRCTC Tourism</a></p>
+            <p>*<a href="https://www.incredibleindia.org/content/incredible-india-v2/en.html">Incredible India</a></p>
+            <p>*<a href="https://tourism.gov.in/">Ministry of Tourism</a></p>
+            <p>*<a href="https://www.india.gov.in/">National Portal of India</a></p>
+        </details>
+        <details
+            class="px-5 border-r-2 border-black bg-transparent w-28 open:w-40 open:border-2 open:border-black open:mt-16 open:rounded-md">
+            <summary>Maps</summary>
+            <p>*<a
+                    href="https://www.google.com/maps/@23.3019663,78.2329098,4.75z?entry=ttu&g_ep=EgoyMDI0MDgyMy4wIKXMDSoASAFQAw%3D%3D">Google
+                    Maps</a></p>
+            <p>*<a
+                    href="https://earth.google.com/web/@23.28882689,80.28798222,-1225.08090276a,8758263.5850513d,35y,0.04141278h,0t,0r/data=OgMKATA">Google
+                    Earth</a></p>
+        </details>
+        <a href="about.html" class="px-5 border-r-2 border-black">About</a>
+        <button id="login" class="ml-5 border-black border-2 p-2 rounded-lg bg-orange-500">Login / Signup</button>
+    </div>
+    <div class="h-full w-full ml-[435px] mt-20 flex justify-center items-center">
+        <div class="border-2 border-black rounded-lg h-1/2 w-1/2 p-7 translate-y-24 translate-x-20 pb-20">
+            <div class="text-xl font-semibold pb-4">To get information, fill the details :</div>
+            <br>
+            <div class="text-xl font-medium">
+                <p class="pb-4">Select the State / U.T. :</p>
+                <select id="state" onchange="popdistricts()" class="w-full rounded-md">
+                    <option>Select ...</option>
+                    <option value="1">Andaman and Nicobar Islands (U.T.)</option>
+                    <option value="2">Andhra Pradesh</option>
+                    <option value="3">Arunachal Pradesh</option>
+                    <option value="4">Assam</option>
+                    <option value="5">Bihar</option>
+                    <option value="6">Chandigarh (U.T.)</option>
+                    <option value="7">Chhattisgarh</option>
+                    <option value="8">Dadra and Nagar Haveli andDaman & Diu (U.T.)</option>
+                    <option value="9">Delhi (U.T.)</option>
+                    <option value="10">Goa</option>
+                    <option value="11">Gujarat</option>
+                    <option value="12">Haryana</option>
+                    <option value="13">Himachal Pradesh</option>
+                    <option value="14">Jammu & Kashmir (U.T.)</option>
+                    <option value="15">Jharkhand</option>
+                    <option value="16">Karnataka</option>
+                    <option value="17">Kerala</option>
+                    <option value="18">Ladakh (U.T.)</option>
+                    <option value="19">Lakshadweep (U.T.)</option>
+                    <option value="20">Madhya Pradesh</option>
+                    <option value="21">Maharashtra</option>
+                    <option value="22">Manipur</option>
+                    <option value="23">Meghalaya</option>
+                    <option value="24">Mizoram</option>
+                    <option value="25">Nagaland</option>
+                    <option value="26">Odisha</option>
+                    <option value="27">Puducherry (U.T.)</option>
+                    <option value="28">Punjab</option>
+                    <option value="29">Rajasthan</option>
+                    <option value="30">Sikkim</option>
+                    <option value="31">Tamil Nadu</option>
+                    <option value="32">Telangana</option>
+                    <option value="33">Tripura</option>
+                    <option value="34">Uttarakhand</option>
+                    <option value="35">Uttar Pradesh</option>
+                    <option value="36">West Bengal</option>
+                </select>
+                <p class="py-4">Select the district : </p>
+                <select id="district" class="w-full rounded-md">
+                    <option disabled>---select---</option>
+                </select>
+                <button
+                    class="bg-orange-500 border-2 border-black w-full py-3 mt-20 rounded-lg text-2xl font-bold text-white">Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="slider">
+        <div class="slide-track">
+            <div class="slide"><img src="smvd.png"></div>
+            <div class="slide"><img src="indiagate.avif"></div>
+            <div class="slide"><img src="tajmahal.jpeg"></div>
+            <div class="slide"><img src="sanchi.webp"></div>
+            <div class="slide"><img src="akshardham.jpg"></div>
+            <div class="slide"><img src="UNESCO.webp"></div>
+            <div class="slide"><img src="redfort.webp"></div>
+            <div class="slide"><img src="gateway.avif"></div>
+            <div class="slide"><img src="smvd.png"></div>
+            <div class="slide"><img src="indiagate.avif"></div>
+            <div class="slide"><img src="tajmahal.jpeg"></div>
+            <div class="slide"><img src="sanchi.webp"></div>
+            <div class="slide"><img src="akshardham.jpg"></div>
+            <div class="slide"><img src="UNESCO.webp"></div>
+            <div class="slide"><img src="redfort.webp"></div>
+            <div class="slide"><img src="gateway.avif"></div>
+        </div>
+        <footer class="absolute translate-y-24 text-xl font-bold font-serif">
+            <small>
+                Copyright © 2024 HeritageIndia Archives. All Rights Reserved.
+            </small>
+        </footer>
+    </div>
+
+</body>
+
+</html>
